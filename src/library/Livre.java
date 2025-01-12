@@ -82,7 +82,9 @@ public class Livre implements Afficher {
 
     @Override
     public void afficherDetails() {
-        System.out.println("Titre Du Livre: " + titre + "\n Auteur: " + auteur+ "\n categorie: "+ categorie + " \n nbrExemplaire: "+ nombreExemplaires);
+        System.out.println("//////////// Informations Sur Le Livre ////////////");
+        System.out.println(" - Titre Du Livre: " + titre + "\n - Auteur: " + auteur+ "\n - categorie: "+ categorie + " \n - nbrExemplaire: "+ nombreExemplaires);
+        System.out.println("////////////////////////////////////////////////////");
 
     }
 }

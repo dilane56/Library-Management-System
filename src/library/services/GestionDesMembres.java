@@ -31,6 +31,10 @@ public class GestionDesMembres {
                     String prenom = scanner.nextLine();
                     System.out.print("Entrer l'Email du Membre : ");
                     String email = scanner.nextLine();
+                    while(!EmailValidator.isValidEmail(email)){
+                        System.out.print("Le format de l'email est invalide veillez réessayer: ");
+                        email = scanner.nextLine();
+                    }
                     LocalDate dateAdhesion = LocalDate.now();
                     Membre membre = new Membre(nom, prenom, email, dateAdhesion);
                     membreDAO.ajouterMembre(membre);
@@ -38,7 +42,9 @@ public class GestionDesMembres {
                 case "2" -> {
                     System.out.print("Entrer l'id du membre a supprimer : ");
                     int id = scanner.nextInt();
+                    scanner.nextLine();
                     membreDAO.supprimerMembre(id);
+
                 }
                 case "3" -> {
                     System.out.print("Entrer lID du Membre A Modifier: ");
@@ -74,8 +80,14 @@ public class GestionDesMembres {
                                 case "3" -> {
                                     System.out.print("Enter Le Nouvel Email Du Membre: ");
                                     String newEmail = scanner.nextLine();
-                                    membre.setEmail(newEmail);
-                                    membreDAO.modifierMembre(membre, idMembre);
+                                    if( EmailValidator.isValidEmail(newEmail)){
+                                        membre.setEmail(newEmail);
+                                        membreDAO.modifierMembre(membre, idMembre);
+                                    }else {
+                                        System.out.println("Le Format de l'email est Invalid");
+                                    }
+
+
                                 }
                                 default -> System.out.println("Choix incorrect");
                             }
