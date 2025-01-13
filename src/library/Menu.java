@@ -58,6 +58,16 @@ public class Menu {
          System.out.print("Entrer Votre Choix : ");
      }
 
+    public  static  void modifierLivreMenu(){
 
+        System.out.println("<><><><><><> Quel Information Voulez Vous Modifer <><><><><><><><>");
+        System.out.println("1- Le Titre");
+        System.out.println("2- L'Auteur");
+        System.out.println("3- La Categorie");
+        System.out.println("4- Le Nombre D'exemplaire");
+        System.out.println("0- Retour Au Menu Precedent");
+        System.out.println("<><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><><>");
+        System.out.print("Choisisiez Une  Option: ");
+    }
 
 }

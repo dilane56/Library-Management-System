@@ -37,7 +37,7 @@ public class GestionDesLivres {
                 }
                 case "2":
                 {
-                    System.out.print("Entrer l'id du livre a supprimer");
+                    System.out.print("Entrer l'id du livre a supprimer: ");
                     int id = scanner.nextInt();
                     scanner.nextLine();
                     livreDAO.supprimerLivre(id);
@@ -90,18 +90,73 @@ public class GestionDesLivres {
                 }
                 case"3":
                 {
-                    System.out.println("Entrer l'id du livre a modifier");
-                    System.out.println("Entrer le nouveau titre du livre");
-                    String titre = scanner.nextLine();
-                    System.out.println("Entrer le Nouveau non de l'Auteur");
-                    String auteur = scanner.nextLine();
-                    System.out.println("Enter la Nouvelle Catégorie");
-                    String categorie =scanner.nextLine();
-                    System.out.println("Entrer le nombre d'exemplaire");
-                    int nbrExemplaire= scanner.nextInt();
+                    System.out.print("Entrer l'id du livre a modifier: ");
+                    int id = scanner.nextInt();
                     scanner.nextLine();
-                    Livre livre = new Livre(titre, auteur, categorie, nbrExemplaire);
-                    livreDAO.modifierLivre(livre);
+                    if(livreDAO.recupererUnLivre(id)!= null){
+                        Livre livre = livreDAO.recupererUnLivre(id);
+                        livre.setId(id);
+                        livre.afficherDetails();
+                        boolean updateComplete= false;
+                        while(!updateComplete){
+                            Menu.modifierLivreMenu();
+                            String update =scanner.nextLine();
+                            switch (update){
+                                case "1" :
+                                {
+                                    System.out.print("Entrer le nouveau titre du livre: ");
+                                    String titre = scanner.nextLine();
+                                    livre.setTitre(titre);
+                                    livreDAO.modifierLivre(livre);
+                                    break;
+                                }
+                                case "2":
+                                {
+                                    System.out.print("Entrer le Nouveau non de l'Auteur: ");
+                                    String auteur = scanner.nextLine();
+                                    livre.setAuteur(auteur);
+                                    livreDAO.modifierLivre(livre);
+                                    break;
+                                }
+                                case "3":
+                                {
+                                    System.out.print("Enter la Nouvelle Catégorie: ");
+                                    String categorie =scanner.nextLine();
+                                    livre.setCategorie(categorie);
+                                    livreDAO.modifierLivre(livre);
+                                    break;
+                                }
+                                case "4":
+                                {
+                                    System.out.print("Entrer le  nouveau nombre d'exemplaire: ");
+                                    int nbrExemplaire= scanner.nextInt();
+                                    scanner.nextLine();
+                                    livre.setNombreExemplaires(nbrExemplaire);
+                                    livreDAO.modifierLivre(livre);
+                                    break;
+                                }
+                                case "0":{
+                                    updateComplete= true;
+                                    break;
+                                }
+                                default:
+                                {
+                                    System.out.println("Choix Incorrect");
+                                    break;
+                                }
+
+                            }
+
+                        }
+
+
+
+
+
+                    }else {
+                        System.out.println("Aucun livre trouver avec cet Id: "+id);
+                    }
+                    break;
                 }
                 default:
                     System.out.println("Choix incorrect");
