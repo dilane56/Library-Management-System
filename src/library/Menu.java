@@ -10,7 +10,7 @@ public class Menu {
         System.out.println("3. Gestion des Emprunts ");
         System.out.println("0. Quitter");
         System.out.println("************************************************************");
-        System.out.print("Entrez votre choix : ");
+
 
     }
     public static void afficherMenuDeGestionDesLivres(){

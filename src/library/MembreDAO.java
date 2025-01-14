@@ -113,6 +113,7 @@ public class MembreDAO {
 
             if (membres.isEmpty()) {
                 System.out.println("Aucun membre trouvé avec ce nom.");
+
             }
         } catch (SQLException e) {
             e.printStackTrace();

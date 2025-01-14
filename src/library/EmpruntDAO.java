@@ -1,8 +1,5 @@
 package library;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -117,10 +114,10 @@ public class EmpruntDAO {
         return emprunts;
     }
     // Fonction permettant de d'indiquer le retour d'un livre
-    public void retournerLivre(int idEmprunt, Boolean statut, int penalite) {
+    public void retournerLivre(LocalDate dateRetourEffective, int idEmprunt, Boolean statut, int penalite) {
         String sql = "UPDATE emprunts SET date_retour_effective = ?, statut = ?, penalite = ? WHERE id_emprunt = ?";
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
-            pstmt.setDate(1, java.sql.Date.valueOf(LocalDate.now())); // Date de retour actuelle
+            pstmt.setDate(1, Date.valueOf(dateRetourEffective)); // Date de retour actuelle
             pstmt.setBoolean(2, statut);
             pstmt.setInt(3, penalite);
             pstmt.setInt(4, idEmprunt);

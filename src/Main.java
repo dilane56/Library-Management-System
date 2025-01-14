@@ -1,20 +1,26 @@
 import library.*;
 
+import library.connection.DatabaseInitializer;
 import library.services.GestionDesLivres;
 import library.services.GestionDesEmprunts;
 import library.services.GestionDesMembres;
+import library.validator.IntInputValidator;
 
 //import java.sql.Connection;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Scanner;
+
+
 
 public class Main {
     public static void main(String[] args) {
 
-       // Connection conn = library.connection.DatabaseConnection.connect();
+     /*   Connection conn = library.connection.DatabaseConnection.connect();
 
 
-       /* if (conn != null) {
+        if (conn != null) {
             // Initialiser la base de données
             DatabaseInitializer dbInitializer = new DatabaseInitializer(conn);
             dbInitializer.initializeDatabase();
@@ -33,12 +39,13 @@ public class Main {
             }
         } else {
             System.out.println("La connexion à la base de données a échoué, le programme ne peut pas continuer.");
-        }*/
-
+        }
+*/
 
 
 
         // Création des DAO
+
 
 
         Scanner scanner = new Scanner(System.in);
@@ -50,8 +57,7 @@ public class Main {
             Menu.afficherMenuPrincipal();
 
 
-            int choix = scanner.nextInt();
-            scanner.nextLine(); // Consommer la nouvelle ligne
+            int choix = IntInputValidator.getIntFromUser(scanner, "Entrez votre choix : ");
             switch (choix) {
                 case 1 -> // Gestion des livres
                         GestionDesLivres.gestionDesLivres();

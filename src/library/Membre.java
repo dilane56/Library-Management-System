@@ -88,6 +88,6 @@ public class Membre implements Afficher {
 
     @Override
     public void afficherDetails() {
-        System.out.println("- Nom Membre: " + nom + "\n- Prenom "+ prenom + "\n- Email: " + email+"\n- Date d'Adhesion: "+ adhesionDate);
+        System.out.println("- Nom Membre: " + nom + "\n- Prenom: "+ prenom + "\n- Email: " + email+"\n- Date d'Adhesion: "+ adhesionDate);
     }
 }

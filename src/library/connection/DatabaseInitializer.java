@@ -83,7 +83,7 @@ public class DatabaseInitializer {
     }
 
     private void createTriggerMiseAJourEmprunt() {
-        String sql = "CREATE TRIGGER trigger_mise_a_jour_emprunt " +
+        String sql = "CREATE OR REPLACE TRIGGER trigger_mise_a_jour_emprunt " +
                 "AFTER INSERT ON emprunts " +
                 "FOR EACH ROW " +
                 "EXECUTE FUNCTION mise_a_jour_exemplaires_emprunt();";
@@ -112,7 +112,7 @@ public class DatabaseInitializer {
     }
 
     private void createTriggerMiseAJourStatut() {
-        String sql = "CREATE TRIGGER trigger_mise_a_jour_statut " +
+        String sql = "CREATE OR REPLACE TRIGGER trigger_mise_a_jour_statut " +
                 "AFTER UPDATE OF statut ON emprunts " +
                 "FOR EACH ROW " +
                 "EXECUTE FUNCTION mise_a_jour_exemplaires_statut();";
@@ -136,7 +136,7 @@ public class DatabaseInitializer {
     }
 
     private void createTriggerMiseAJourIdLivre() {
-        String sql = "CREATE TRIGGER trigger_mise_a_jour_idLivre " +
+        String sql = "CREATE OR REPLACE TRIGGER trigger_mise_a_jour_idLivre " +
                 "AFTER UPDATE OF livre_id ON emprunts " +
                 "FOR EACH ROW " +
                 "EXECUTE FUNCTION mise_a_jour_exemplaires_idLivre();";
@@ -161,7 +161,7 @@ public class DatabaseInitializer {
     }
 
     private void createTriggerMiseAJourDelete() {
-        String sql = "CREATE TRIGGER trigger_mise_a_jour_delete " +
+        String sql = "CREATE OR REPLACE TRIGGER trigger_mise_a_jour_delete " +
                 "AFTER DELETE ON emprunts " +
                 "FOR EACH ROW " +
                 "EXECUTE FUNCTION mise_a_jour_exemplaires_delete();";
