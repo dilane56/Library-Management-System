@@ -129,10 +129,10 @@ public class GestionDesMembres {
                     }
 
                 }
-                default -> System.out.println("Choix Incorrect");
+default -> System.out.println("Choix Incorrect");
             }
 
 
-        }while(!completeMemberManagement.equals("0"));
-    }
-}
+                    }while(!completeMemberManagement.equals("0"));
+        }
+        }
