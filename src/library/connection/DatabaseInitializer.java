@@ -45,8 +45,8 @@ public class DatabaseInitializer {
     private void createEmpruntsTable() {
         String sql = "CREATE TABLE IF NOT EXISTS emprunts (" +
                 "id_emprunt SERIAL PRIMARY KEY," +
-                "membre_id INT REFERENCES membres(id) ON DELETE RESTRICT," +
-                "livre_id INT REFERENCES livres(id) ON DELETE RESTRICT," +
+                "membre_id INT REFERENCES membres(id) ON DELETE CASCADE," +
+                "livre_id INT REFERENCES livres(id) ON DELETE CASCADE," +
                 "date_emprunt DATE NOT NULL," +
                 "date_retour_prevue DATE NOT NULL," +
                 "date_retour_effective DATE," +

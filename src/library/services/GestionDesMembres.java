@@ -7,6 +7,7 @@ import library.validator.IntInputValidator;
 
 import java.sql.Connection;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -17,6 +18,7 @@ public class GestionDesMembres {
     Connection conn = DatabaseConnection.connect();
     Scanner scanner = new Scanner(System.in);
     MembreDAO membreDAO = new MembreDAO(conn);
+    EmpruntDAO empruntDAO = new EmpruntDAO(conn);
 
     String completeMemberManagement;
     public void gestionDesMembres(){
@@ -44,8 +46,43 @@ public class GestionDesMembres {
                 }
                 case "2" -> {
 
-                    int id = IntInputValidator.getIntFromUser(scanner, "Entrer l'id du membre a supprimer : " );
-                    membreDAO.supprimerMembre(id);
+                    int idMembre = IntInputValidator.getIntFromUser(scanner, "Entrer l'id du membre a supprimer : " );
+                    List<Emprunt> emprunts = empruntDAO.recupererEmpruntsParMembre(idMembre);
+                    List<Emprunt> empruntsEncours =new ArrayList<>();
+                    if(!emprunts.isEmpty()){
+                        for(Emprunt emprunt: emprunts){
+                            if(emprunt.getStatut()){
+                                empruntsEncours.add(emprunt);
+                            }
+
+                        }
+                        if(!empruntsEncours.isEmpty()){
+                            System.out.println("Impossible de supprimer le membre car il possède des Emprunts en Cours Veillez Terminer ses Emprunt puis réessayer");
+                        }else {
+                            System.out.println("Ce membre Possede des Emprunts Terminer Le Supprimer  Supprimera Automatiquement les emprunts Correspondant");
+                            System.out.println("Etes Vous Sur De Vouloir Supprimer Ce Membre");
+                            System.out.println("1- OUI");
+                            System.out.println("2- NON");
+                            System.out.print("Entrer votre choix : ");
+                            String choix = scanner.nextLine();
+                            switch(choix){
+                                case "1" -> {
+                                    membreDAO.supprimerMembre(idMembre);
+                                }
+                                case "2" -> {
+
+                                }
+                                default -> {
+                                    System.out.println("Choix invalide");
+                                }
+                            }
+                        }
+
+                    }else {
+                        membreDAO.supprimerMembre(idMembre);
+                    }
+
+
 
                 }
                 case "3" -> {

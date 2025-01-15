@@ -1,11 +1,10 @@
 package library.services;
 
-import library.Livre;
-import library.LivreDAO;
-import library.Menu;
+import library.*;
 import library.validator.IntInputValidator;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -14,6 +13,7 @@ public class GestionDesLivres {
     static Scanner scanner = new Scanner(System.in);
     static String completeBookManagement;
     static LivreDAO livreDAO = new LivreDAO(conn);
+    static EmpruntDAO empruntDAO = new EmpruntDAO(conn);
 
 
     public static void gestionDesLivres(){
@@ -38,8 +38,43 @@ public class GestionDesLivres {
                 case "2":
                 {
 
-                    int id = IntInputValidator.getIntFromUser(scanner, "Entrer l'id du livre a supprimer: ");
-                    livreDAO.supprimerLivre(id);
+                    int idLivre = IntInputValidator.getIntFromUser(scanner, "Entrer l'id du livre a supprimer: ");
+                    List<Emprunt> emprunts = empruntDAO.recupererEmpruntsParLivre(idLivre);
+                    List<Emprunt> empruntsEncours =new ArrayList<>();
+                    if(!emprunts.isEmpty()){
+                        for(Emprunt emprunt: emprunts){
+                            if(emprunt.getStatut()){
+                                empruntsEncours.add(emprunt);
+                            }
+
+                        }
+                        if(!empruntsEncours.isEmpty()){
+                            System.out.println("Impossible de supprimer Ce Livre Car Il est emprunté veillez Terminer l'emprunt correspondent puis réessayer");
+                        }else {
+                            System.out.println("Ce Livre a été utiliser pour des Emprunts Terminer Le Supprimer  Supprimera Automatiquement les emprunts Correspondant");
+                            System.out.println("Etes Vous Sur De Vouloir Supprimer Ce Livre");
+                            System.out.println("1- OUI");
+                            System.out.println("2- NON");
+                            System.out.print("Entrer votre choix : ");
+                            String choix = scanner.nextLine();
+                            switch(choix){
+                                case "1" -> {
+                                    livreDAO.supprimerLivre(idLivre);
+                                }
+                                case "2" -> {
+
+                                }
+                                default -> {
+                                    System.out.println("Choix invalide");
+                                }
+                            }
+                        }
+
+                    }else {
+                        livreDAO.supprimerLivre(idLivre);
+                    }
+
+
                     break;
                 }
                 case "4":

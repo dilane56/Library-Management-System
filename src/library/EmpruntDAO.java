@@ -61,6 +61,56 @@ public class EmpruntDAO {
         return getEmprunts(emprunts, sql);
     }
 
+    // Fonction permetant de recuperer des Emprunts d'un livre
+    public List<Emprunt> recupererEmpruntsParLivre(int idLivre) {
+        List<Emprunt> emprunts = new ArrayList<>();
+        String sql = "SELECT * FROM emprunts WHERE livre_id = ?";
+        try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+            pstm.setInt(1, idLivre);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                int idEmprunt = rs.getInt("id_emprunt");
+                int idMembre = rs.getInt("membre_id");
+                Boolean statut = rs.getBoolean("statut");
+                LocalDate dateEmprunt = rs.getDate("date_emprunt").toLocalDate();
+                String dateRetourPrevue = rs.getString("date_retour_prevue");
+                LocalDate dateRetourEffective = (rs.getDate("date_retour_effective") != null ? rs.getDate("date_retour_effective").toLocalDate() : null);
+                int penalite = rs.getInt("penalite");
+                Emprunt emprunt = new Emprunt(idEmprunt, idMembre, idLivre, dateEmprunt, dateRetourPrevue, dateRetourEffective, statut, penalite);
+                emprunts.add(emprunt);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return emprunts;
+    }
+
+
+    // Fonction permetant de recuperer des Emprunts d'un Membre
+    public List<Emprunt> recupererEmpruntsParMembre(int idMembre) {
+        List<Emprunt> emprunts = new ArrayList<>();
+        String sql = "SELECT * FROM emprunts WHERE membre_id = ?";
+        try (PreparedStatement pstm = connection.prepareStatement(sql)) {
+            pstm.setInt(1, idMembre);
+            ResultSet rs = pstm.executeQuery();
+            while (rs.next()) {
+                int idEmprunt = rs.getInt("id_emprunt");
+                int idLivre = rs.getInt("membre_id");
+                Boolean statut = rs.getBoolean("statut");
+                LocalDate dateEmprunt = rs.getDate("date_emprunt").toLocalDate();
+                String dateRetourPrevue = rs.getString("date_retour_prevue");
+                LocalDate dateRetourEffective = (rs.getDate("date_retour_effective") != null ? rs.getDate("date_retour_effective").toLocalDate() : null);
+                int penalite = rs.getInt("penalite");
+                Emprunt emprunt = new Emprunt(idEmprunt, idMembre, idLivre, dateEmprunt, dateRetourPrevue, dateRetourEffective, statut, penalite);
+                emprunts.add(emprunt);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return emprunts;
+    }
+
+
     // Fonction permettant d’afficher tous les emprunts ayant été pénalisés
     public  List<Emprunt> AfficherEmpruntsPenalise(){
         List<Emprunt> emprunts = new ArrayList<>();
