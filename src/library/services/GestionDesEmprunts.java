@@ -212,8 +212,42 @@ public class GestionDesEmprunts {
                 }
                 case "4" -> {
 
-                    int idEmprunt = IntInputValidator.getIntFromUser(scanner, "Entrer L'id de L' Emprunt Que Vous Voulez Supprimer");
-                    empruntDAO.supprimerEmprunt(idEmprunt);
+                    int idEmprunt = IntInputValidator.getIntFromUser(scanner, "Entrer L'id de L' Emprunt Que Vous Voulez Supprimer: ");
+                    Emprunt emprunt = empruntDAO.recupererEmprunt(idEmprunt);
+                    if (emprunt != null) {
+                        String statut;
+                        if(emprunt.getStatut()){
+                            boolean completDelete = false;
+                            while (!completDelete) {
+                                System.out.println("Etes vous sur de vouloir Supprimer cet Emprunt Car Il est Encore En Cours");
+                                System.out.println("1 - OUi");
+                                System.out.println("2 - Non");
+                                System.out.print("Entrer votre Decision : ");
+                                String decision = scanner.nextLine();
+                                switch (decision) {
+                                    case "1": {
+                                        empruntDAO.supprimerEmprunt(idEmprunt);
+                                        completDelete = true;
+                                        break;
+                                    }
+                                    case "2": {
+                                        completDelete = true ;
+                                        break;
+                                    }
+                                    default:{
+                                        System.out.println("choix incorrect");
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }else{
+                        System.out.println("Aucun Emprunt Trouver Avec cet ID: " + idEmprunt);
+                    }
+
+
                 }
                 case "5" -> {
                     List<Emprunt> emprunts = empruntDAO.afficherTousLesEmprunts();
@@ -228,7 +262,14 @@ public class GestionDesEmprunts {
                 }
                 case "7" -> {
                     List<Emprunt> empruntEncours = empruntDAO.afficherTousLesEmpruntsEncour();
-                    empruntDAO.afficherListeEmprunt(empruntEncours);
+                    if (!empruntEncours.isEmpty()) {
+                        System.out.println("++++++++++++++++ Liste Des Emprunts En Cours ++++++++++++++++");
+                        empruntDAO.afficherListeEmprunt(empruntEncours);
+                        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                    }else{
+                        System.out.println("Aucun Emprunt Trouvé");
+                    }
+
                 }
                 case "6" -> {
                     int idEmprunt = IntInputValidator.getIntFromUser(scanner, "Entrer l'Id de L'Emprunt Dont Vous Voulez Les Details: ");
@@ -237,21 +278,28 @@ public class GestionDesEmprunts {
                         int idLivre = emprunt.getLivreId();
                         int membreId = emprunt.getMembreId();
                         Emprunt empruntDetails = empruntDAO.recupererDetailsEmprunts(membreId, idLivre);
+                        System.out.println("++++++++++++++++ Informations Sur L'Emprunt ++++++++++++++++");
                         empruntDetails.afficherDetails();//Affiche-les details de l’Emprunt
+                        System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                     } else {
                         System.out.println("Aucun Emprunt trouvé avec cet Id: " + idEmprunt);
                     }
 
                 }
                 case "8" -> {
-                    System.out.println("******* Liste des Emprunts En Retard De Retour *******");
+                    System.out.println("++++++++++ Liste des Emprunts En Retard De Retour ++++++++++");
                     List<Emprunt> empruntsEnRetard = empruntDAO.afficherTousLesEmpruntsEnRetard();
                     empruntDAO.afficherListeEmprunt(empruntsEnRetard);
+                    System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
                 }
                 case "9" -> {
-                    System.out.println("******* Liste Des Emprunts Pénalisés");
+                    System.out.println("++++++++++++ Liste Des Emprunts Pénalisés ++++++++++++++++++");
                     List<Emprunt> empruntsPenalise = empruntDAO.AfficherEmpruntsPenalise();
                     empruntDAO.afficherListeEmprunt(empruntsPenalise);
+                    System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+                }
+                case "0" -> {
+
                 }
                 default -> System.out.println("Choix incorrect");
             }
