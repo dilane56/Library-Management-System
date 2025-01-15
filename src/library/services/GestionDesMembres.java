@@ -129,7 +129,10 @@ public class GestionDesMembres {
                     }
 
                 }
-default -> System.out.println("Choix Incorrect");
+                case "0" -> {
+
+                }
+                default -> System.out.println("Choix Incorrect");
             }
 
 

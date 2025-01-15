@@ -153,6 +153,9 @@ public class GestionDesLivres {
                     }
                     break;
                 }
+                case "0":{
+                    break;
+                }
                 default:
                     System.out.println("Choix incorrect");
                     break;
